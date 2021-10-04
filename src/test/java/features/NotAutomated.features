@@ -1,0 +1,79 @@
+Feature: Form Scenarios
+@SmokeTest1
+Scenario: Verifyng all the fields of Form with valid data  
+Given User is on Practice Form page
+When User sign up with following details
+|FirstName|LastName|Gender|Mobile    |Email       |DateOfBirth|Subjects|Hobbies|Picture |CurrentAddress|State|City |
+|Jhon     |Smith   |Male  |1234567891|JS@gmail.com|01 Oct 2021|Maths   |Music  |FileName|Adress		   |NCR  |Delhi|
+And cliks on Submit
+Then Form successfully submitted
+
+
+@WebTest     
+Scenario Outline: Verifying the Date of Birth field should for Future dates   #Ideally it should fail but I have written as of the current behavior
+Given User is on Practice Form page
+When User sign up with following details
+|FirstName|LastName|Gender|Mobile    |
+|Jhon     |Smith   |Male  |1234567891|
+And User selects <DateOfBirth>
+And cliks on Submit
+Then Form successfully submitted
+
+Examples:
+|DateOfBirth |
+|01 Oct 2021 |
+|01 Oct 2022 |
+|01 Oct 2073 | 
+
+
+
+@MobileTest     
+Scenario: Verifyng all the mandatory fields of Form with valid data   #same as scenario which is automated only tag is different here .
+Given User is on Practice Form page
+When User sign up with following details
+|FirstName|LastName|Gender|Mobile    |
+|Jhon     |Smith   |Male  |1234567891|
+And cliks on Submit
+Then Form successfully submitted
+
+@SmokeTest1
+Scenario: Verifyng all the fields of Form with valid data  
+Given User is on Practice Form page
+When User sign up with following details
+|FirstName|LastName|Gender|Mobile    |Email       |DateOfBirth|Subjects|Hobbies|Picture |CurrentAddress|State|City |
+|Jhon     |Smith   |Male  |1234567891|JS@gmail.com|01 Oct 2021|Maths   |Music  |FileName|Adress		   |NCR  |Delhi|
+And cliks on Submit
+Then Form successfully submitted
+
+Scenario: Verifyng all the fields of Form with invalid data  
+Given User is on Practice Form page
+When User sign up with following details
+|FirstName|LastName|Gender|Mobile     |Email       |DateOfBirth|Subjects|Hobbies|Picture |CurrentAddress|State|City |
+|$$$$     |&%*%^   |Male  |11234567891|.com@6767777|01 Oct 2029|$%$#%   |Music  |FileName|Adress		|NCR  |Delhi|
+And cliks on Submit
+Then Form will highlight with filds with invalid value 
+
+Scenario: Verifyng the Select City is active only on selecting state
+Given User is on Practice Form page
+When User selects value from state dropdown
+Then Select city is enabled
+
+Scenario Outline: Verifyng the values under Select State and Select City dropdown
+Given User is on Practice Form page
+And User selects <State> from Select State dropdown
+Then User is able to select respective <City> from Select city dropdown
+
+Examples:
+
+|State         |City     |
+|NCR           |Delhi    |
+|NCR           |Guraon   |
+|NCR           |Noida    |
+|Uttar Pradesh |Agra     |
+|Uttar Pradesh |Lucknow  |
+|Uttar Pradesh |Meerut   |
+|Haryana       |Karnal   |
+|Haryana       |Panipat  |
+|Rajasthan     |Jaipur   |
+|Rajasthan     |Jaiselmer|
+
